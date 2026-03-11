@@ -3,7 +3,7 @@
     margin: 0; /* Remove todas as margens padrão */
     padding: 0; /* Remove os preenchimentos internos padrão */
     box-sizing: border-box; /* Garante que a largura e altura dos elementos incluam a borda */
-    font-family: Arial, Helvetica, sans-serif; /* Define a fonte do texto da página */
+    font-family: 'Titillium Web', Arial, Helvetica, sans-serif; /* Define a fonte do texto da página */
 }
 
 .bng-navbar {
@@ -104,3 +104,4 @@
     text-align: center; /* Centraliza o texto dentro dos artigos */
     min-height: 100vh; /* Garante altura mínima de uma janela (ecrã) */
 }
+

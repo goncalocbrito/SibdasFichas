@@ -1,100 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISEP Ginásio</title>
-
-    <!-- favicon -->
-    <link rel="shortcut icon" href="../../assets/img/gym125.png" type="image/png">
-    
-    <!-- Bootstrap CSS & custom CSS -->
-    <link rel="stylesheet" href="../../assets/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="../../assets/css/admin.css">
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,300;0,700;1,400&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="../../assets/fontawesome/all.min.css">
-</head>
-
-<body>
-        <!-- Navbar -->
-        <header class="container-fluid bg-dark text-white">
-            <div class="row align-items-center">
-                <div class="col-6 d-flex align-items-center p-3">
-                    <!-- Logo e Nome -->
-                    <a href="../../index.html">
-                        <img src="../../assets/img/gym125_white.png"
-                            alt="Logo do ISEP Ginásio"
-                            height="40"
-                            class="me-3">
-                    </a>
-
-                    <h3 class="mb-0">ISEP Ginásio</h3>
-                </div>
-                
-                <div class="col-6 text-end p-3">
-
-                <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle"
-                                type="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                            <i class="fa-regular fa-user me-2"></i> Utilizador
-                        </button>
-
-                        <ul class="dropdown-menu dropdown-menu-end">
-
-                            <li>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fa-solid fa-key me-2"></i> Alterar password
-                                </a>
-                            </li>
-
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-
-                            <li>
-                                <a class="dropdown-item" href="login_form.html">
-                                    <i class="fa-solid fa-right-from-bracket me-2"></i> Sair
-                                </a>
-                            </li>
-
-                        </ul>
-
-                    </div>
-                </div>
-            </div>
-        </header>
+<?php include '../../includes/header.php'; ?>
+<?php include '../../includes/nav.php'; ?>
 
         <div class="container-fluid">
             <div class="row">
-                <!-- Sidebar -->
-                <aside class="col-md-3 col-lg-2 bg-secondary text-white p-3 min-vh-100">
-                    <h4>Menu</h4>
-                    <nav>
-                        <a href="lista.html" class="nav-link text-white px-0 mb-2 d-block">
-                            <i class="fas fa-users"></i> &ensp; Clientes
-                        </a>
-                        <a href="../agendamento/agendamento.html" class="nav-link text-white px-0 mb-2 d-block">
-                            <i class="fas fa-calendar-alt"></i> &ensp;Agendamento de treinos
-                        </a>
-                        <a href="../planos/planos.html" class="nav-link text-white px-0 mb-2 d-block">
-                            <i class="fas fa-dumbbell"></i> &ensp;Planos de Treino
-                        </a>
-                        <a href="../equipamentos/equipamentos.html" class="nav-link text-white px-0 mb-2 d-block">
-                            <i class="fas fa-cogs"></i> &ensp;Equipamentos
-                        </a>
-                        <a href="../produtos-servicos/produtos-servicos.html" class="nav-link text-white px-0 mb-2 d-block">
-                            <i class="fas fa-box-open"></i> &ensp;Produtos e Serviços
-                        </a>
-                    </nav>
-                </aside>
+                <?php include '../../includes/sidebar.php'; ?>
                 
                 <!-- Conteúdo Principal -->
                 <main class="col-md-9 col-lg-10 p-4">
@@ -107,7 +16,7 @@
 
                                 <h2 class="mb-4">
                                     <strong>
-                                        <i class="fa-solid fa-users me-2"></i> Atualização de Dados CLIENTES
+                                        <i class="fa-solid fa-users me-2"></i> Inserir novo cliente
                                     </strong>
                                 </h2>
 
@@ -124,7 +33,6 @@
                                                 class="form-control"
                                                 id="texto_nome"
                                                 name="nome_cliente"
-                                                value="João Miguel Ferreira"
                                                 required>
                                         </div>
                                     </div>
@@ -137,8 +45,7 @@
                                             <input type="text"
                                                 class="form-control"
                                                 id="texto_endereco"
-                                                name="morada_cliente"
-                                                value="Rua das Flores, Nº 25, 2º Esq">
+                                                name="morada_cliente">
                                         </div>
                                     </div>
 
@@ -150,7 +57,6 @@
                                                 class="form-control"
                                                 id="texto_cp"
                                                 name="cp_cliente"
-                                                value="4200-072"
                                                 required>
                                         </div>
 
@@ -160,7 +66,6 @@
                                                 class="form-control"
                                                 id="texto_cidade"
                                                 name="cid_cliente"
-                                                value="Porto"
                                                 required>
                                         </div>
 
@@ -170,7 +75,6 @@
                                                 class="form-control"
                                                 id="texto_cliente"
                                                 name="tel_cliente"
-                                                value="912345678"
                                                 required>
                                         </div>
 
@@ -180,7 +84,6 @@
                                                 class="form-control"
                                                 id="texto_email"
                                                 name="email_cliente"
-                                                value="joao.ferreira@email.com"
                                                 required>
                                         </div>
 
@@ -192,6 +95,7 @@
                                             <label class="form-label">Sexo</label>
 
                                             <div>
+
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input"
                                                         type="radio"
@@ -199,6 +103,7 @@
                                                         id="radio_m"
                                                         value="m"
                                                         checked>
+
                                                     <label class="form-check-label" for="radio_m">
                                                         Masculino
                                                     </label>
@@ -210,10 +115,12 @@
                                                         name="radio_gender"
                                                         id="radio_f"
                                                         value="f">
+
                                                     <label class="form-check-label" for="radio_f">
                                                         Feminino
                                                     </label>
                                                 </div>
+
                                             </div>
                                         </div>
 
@@ -221,11 +128,11 @@
                                             <label for="texto_dnasc" class="form-label">
                                                 Data de nascimento
                                             </label>
+
                                             <input type="text"
                                                 class="form-control"
                                                 id="texto_dnasc"
                                                 name="dnasc_cliente"
-                                                value="15/08/1998"
                                                 required>
                                         </div>
 
@@ -241,10 +148,12 @@
                                             <select class="form-select"
                                                     id="texto_estcivil"
                                                     name="estaciv_cliente">
-                                                <option>Escolha uma opção</option>
-                                                <option value="solt" selected>Solteiro</option>
+
+                                                <option selected>Escolha uma opção</option>
+                                                <option value="solt">Solteiro</option>
                                                 <option value="casd">Casado</option>
                                                 <option value="ufat">União de Facto</option>
+
                                             </select>
                                         </div>
 
@@ -257,8 +166,7 @@
                                                 class="form-control"
                                                 id="texto_SSaude"
                                                 name="campo_opcao"
-                                                list="sistemasaude"
-                                                value="ADSE">
+                                                list="sistemasaude">
 
                                             <datalist id="sistemasaude">
                                                 <option value="SNS">
@@ -267,6 +175,7 @@
                                                 <option value="CTT">
                                                 <option value="PSP">
                                             </datalist>
+
                                         </div>
 
                                         <div class="col-md-4">
@@ -277,8 +186,7 @@
                                             <input type="text"
                                                 class="form-control"
                                                 id="profissao"
-                                                name="profissao_cliente"
-                                                value="Engenheiro Informático">
+                                                name="profissao_cliente">
                                         </div>
 
                                     </div>
@@ -286,7 +194,7 @@
                                     <!-- Botões -->
                                     <div class="d-flex justify-content-end gap-2 mb-4">
 
-                                        <a href="lista.html" class="btn btn-outline-secondary">
+                                        <a href="lista.php" class="btn btn-outline-secondary">
                                             <i class="fa-solid fa-xmark me-1"></i> Cancelar
                                         </a>
 
@@ -314,8 +222,5 @@
             </div>       
         </div>
 
-        <!-- Bootstrap JS and custom JS -->
-        <script src="../../assets/bootstrap/bootstrap.bundle.min.js"></script>
+<?php include '../../includes/footer.php'; ?>
 
-</body>
-</html>

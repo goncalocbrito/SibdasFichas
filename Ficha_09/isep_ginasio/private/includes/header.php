@@ -10,11 +10,12 @@ require_once __DIR__ . '/../../config/config.php';
     <title><?php echo APP_NAME; ?></title>
 
     <!-- favicon -->
-    <link rel="shortcut icon" href="../private/assets/img/gym125.png" type="image/png">
+    <link rel="shortcut icon" href="/isep_ginasio/private/assets/img/gym125.png" type="image/png">
     
     <!-- Bootstrap CSS & custom CSS -->
-    <link rel="stylesheet" href="../private/assets/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="../private/assets/css/admin.css">
+    <link rel="stylesheet" href="/isep_ginasio/private/assets/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/isep_ginasio/private/assets/css/admin.css">
+    <link rel="stylesheet" href="/isep_ginasio/private/assets/css/app.css">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,7 +23,7 @@ require_once __DIR__ . '/../../config/config.php';
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,300;0,700;1,400&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="../private/assets/fontawesome/all.min.css">
+    <link rel="stylesheet" href="/isep_ginasio/private/assets/fontawesome/all.min.css">
 
 </head>
 

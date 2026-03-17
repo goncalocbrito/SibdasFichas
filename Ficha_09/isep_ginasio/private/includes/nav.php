@@ -5,8 +5,8 @@
 
             <div class="col-6 d-flex align-items-center p-3">
                 <!-- Logo e Nome -->
-                <a href="index.html">
-                    <img src="assets/img/gym125_white.png"
+                <a href="/isep_ginasio/private/index.php">
+                    <img src="/isep_ginasio/private/assets/img/gym125_white.png"
                         alt="Logo do ISEP Ginásio"
                         height="40"
                         class="me-3">

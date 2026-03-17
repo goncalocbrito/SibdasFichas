@@ -1,16 +1,20 @@
+<?php
+require_once __DIR__ . '/../config/config.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISEP Ginásio</title>
+    <title><?php echo APP_NAME; ?></title>
 
     <!-- favicon -->
-    <link rel="shortcut icon" href="../backend/assets/img/gym125.png" type="image/png">
+    <link rel="shortcut icon" href="../private/assets/img/gym125.png" type="image/png">
     
     <!-- Bootstrap CSS & custom CSS -->
-    <link rel="stylesheet" href="../backend/assets/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="../backend/assets/css/admin.css">
+    <link rel="stylesheet" href="../private/assets/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../private/assets/css/admin.css">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,7 +22,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,300;0,700;1,400&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="../backend/assets/fontawesome/all.min.css">
+    <link rel="stylesheet" href="../private/assets/fontawesome/all.min.css">
 
 </head>
 
@@ -38,7 +42,7 @@
                         class="me-3">
                 </a>
 
-                <h3 class="mb-0">ISEP Ginásio</h3>
+                <h3 class="mb-0"><?php echo APP_NAME; ?></h3>
             </div>
             
             <div class="col-6 text-end p-3">
@@ -112,6 +116,6 @@
     </div>
 
     <!-- Bootstrap JS and custom JS -->
-    <script src="../backend/assets/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="../private/assets/bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 </html>

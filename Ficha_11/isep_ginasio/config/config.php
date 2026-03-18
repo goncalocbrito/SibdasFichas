@@ -1,5 +1,5 @@
 <?php
-define('BASE_URL', '/isep-ginasio');
+define('BASE_URL', '/SIBDAS/Ficha_11/isep_ginasio');
 
 // Configurações globais da aplicação
 define('APP_NAME', 'ISEP Porto Ginásio');

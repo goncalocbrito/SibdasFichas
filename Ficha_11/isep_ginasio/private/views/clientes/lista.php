@@ -77,11 +77,21 @@ $ligacao = null;
                                     <?php foreach ($resultados as $cliente) : ?>
                                         <tr>
                                             <td><?= $cliente->nome ?></td>
-                                            <td>[Sexo]</td>
-                                            <td>[data_Nasc]</td>
-                                            <td>[email]</td>
-                                            <td>[Telefone]</td>
-                                            <td>[sistema_saude]</td>
+                                            <td class="text-center">
+                                                <?= $cliente->sexo == 'm' ? 'Masculino' : 'Feminino' ?>
+                                            </td>
+                                            <td class="text-center">
+                                                <?= substr($cliente->data_nascimento, 0, 10) ?>
+                                            </td>
+                                            <td>
+                                                <?= $cliente->email ?>
+                                            </td>
+                                            <td class="text-center">
+                                                <?= $cliente->telefone ?>
+                                            </td>
+                                            <td>
+                                                <?= $cliente->morada . ' - ' . $cliente->cidade ?>
+                                            </td>
 
                                             <td class="text-center">
 
@@ -103,7 +113,9 @@ $ligacao = null;
                                 </tbody>
                             </table>
                         </div>
-
+                        <div class="col">
+                            <p class="mb-5">Total: <strong> <?= count($resultados) ?> </strong></p>
+                        </div>
                     <?php endif; ?> <!-- Fecha o if (count($resultados) == 0) -->
                 <?php endif; ?> <!-- Fecha o if (!empty($erro)) -->                
             </div>

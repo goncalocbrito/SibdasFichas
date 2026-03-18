@@ -6,10 +6,30 @@
 // --------------------------------------------------------------------
 require_once __DIR__ . '/../../includes/funcoes.php';
 redirect_if_not_logged(); // Inicia a sessão (se necessário) e verifica se o utilizador está autenticado
-?>
 
-<?php include '../../includes/header.php'; ?>
-<?php include '../../includes/nav.php'; ?>
+include '../../includes/header.php';
+include '../../includes/nav.php';
+
+try {
+    $ligacao = new PDO(
+        "mysql:host=" . MYSQL_HOST . ";port=" . MYSQL_PORT . ";dbname=" . MYSQL_DATABASE . ";charset=utf8",
+        MYSQL_USERNAME,
+        MYSQL_PASSWORD
+    );
+
+    $ligacao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $resultados = $ligacao->query("SELECT * FROM clientes")->fetchAll(PDO::FETCH_OBJ);
+    $erro = '';
+
+} catch (PDOException $err) {
+    $erro = "Aconteceu um erro na ligação.";
+    $resultados = [];
+}
+
+// Fecha a ligação
+$ligacao = null;
+?>
 
     <div class="container-fluid">
         <div class="row">
@@ -31,53 +51,61 @@ redirect_if_not_logged(); // Inicia a sessão (se necessário) e verifica se o u
 
                 <hr>
 
-                <p class="text-muted">Não existem clientes registados.</p>
+                <?php if (!empty($erro)) : ?>
+                    <p class="text-center text-danger"><?= $erro ?></p>
+                <?php else : ?>
+                    <?php if (count($resultados) == 0) : ?>
+                        <p class="text-muted">Não existem clientes registados.</p>
+                    <?php else : ?>
 
-                <div class="table-responsive">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped align-middle">
 
-                    <table class="table table-bordered table-striped align-middle">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Sexo</th>
+                                        <th>Data nascimento</th>
+                                        <th>Email</th>
+                                        <th>Telefone</th>
+                                        <th>Sistema de Saúde</th>
+                                        <th class="text-center">Ações</th>
+                                    </tr>
+                                </thead>
 
-                        <thead class="table-dark">
-                            <tr>
-                                <th>Nome</th>
-                                <th>Sexo</th>
-                                <th>Data nascimento</th>
-                                <th>Email</th>
-                                <th>Telefone</th>
-                                <th>Sistema de Saúde</th>
-                                <th class="text-center">Ações</th>
-                            </tr>
-                        </thead>
+                                <tbody>
+                                    <?php foreach ($resultados as $cliente) : ?>
+                                        <tr>
+                                            <td><?= $cliente->nome ?></td>
+                                            <td>[Sexo]</td>
+                                            <td>[data_Nasc]</td>
+                                            <td>[email]</td>
+                                            <td>[Telefone]</td>
+                                            <td>[sistema_saude]</td>
 
-                        <tbody>
+                                            <td class="text-center">
 
-                            <tr>
-                                <td>[Nome Cliente]</td>
-                                <td>[Sexo]</td>
-                                <td>[data_Nasc]</td>
-                                <td>[email]</td>
-                                <td>[Telefone]</td>
-                                <td>[sistema_saude]</td>
+                                                <a href="detalhes.php" class="btn btn-sm btn-outline-primary me-1">
+                                                    <i class="fa-solid fa-eye"></i>
+                                                </a>
 
-                                <td class="text-center">
+                                                <a href="editar.php" class="btn btn-sm btn-outline-warning me-1">
+                                                    <i class="fa-regular fa-pen-to-square"></i>
+                                                </a>
 
-                                    <a href="detalhes.php" class="btn btn-sm btn-outline-primary me-1">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </a>
+                                                <a href="apagar.php" class="btn btn-sm btn-outline-danger">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                </a>
 
-                                    <a href="editar.php" class="btn btn-sm btn-outline-warning me-1">
-                                        <i class="fa-regular fa-pen-to-square"></i>
-                                    </a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
 
-                                    <a href="apagar.php" class="btn btn-sm btn-outline-danger">
-                                        <i class="fa-solid fa-trash-can"></i>
-                                    </a>
-
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    <?php endif; ?> <!-- Fecha o if (count($resultados) == 0) -->
+                <?php endif; ?> <!-- Fecha o if (!empty($erro)) -->                
             </div>
         </div>       
     </div>

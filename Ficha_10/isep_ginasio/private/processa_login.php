@@ -19,6 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 // --------------------------------------------------------------------
 // RECOLHA DE DADOS DO FORMULÁRIO
 // --------------------------------------------------------------------
+// Verifica se o campo 'text_username' foi enviado via POST.
+// Se sim, guarda-o na variável $username. Caso contrário, usa string vazia.
+$username = isset($_POST['text_username']) ? $_POST['text_username'] : '';
+// O mesmo para o campo da password.
+$password = isset($_POST['text_password']) ? $_POST['text_password'] : '';
 
 // Guarda o nome de utilizador na sessão para identificar o utilizador autenticado
 $_SESSION['utilizador'] = $username;
@@ -26,3 +31,4 @@ $_SESSION['utilizador'] = $username;
 // Redirecionar para a página principal privada
 header('Location: home.php');
 exit;
+?>

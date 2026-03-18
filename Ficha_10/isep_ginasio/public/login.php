@@ -45,7 +45,7 @@ $server_error = [];
                     <div class="row">
                         <div class="col">
                             <!-- Formulário -->
-                             <form action="../private/index.php" method="post">
+                             <form action="SIBDAS/Ficha_10/isep_ginasio/private/processa_login.php" method="post">
 
                                 <div class="mb-3">
                                     <!-- Utilizador -->

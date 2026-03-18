@@ -22,7 +22,7 @@ $nome = $_SESSION['utilizador'];
 
             <div class="col-6 d-flex align-items-center p-3">
                 <!-- Logo e Nome -->
-                <a href="/SIBDAS/Ficha_10/isep_ginasio/private/index.php">
+                <a href="/SIBDAS/Ficha_10/isep_ginasio/private/home.php">
                     <img src="/SIBDAS/Ficha_10/isep_ginasio/private/assets/img/gym125_white.png"
                         alt="Logo do ISEP Ginásio"
                         height="40"
@@ -55,7 +55,7 @@ $nome = $_SESSION['utilizador'];
                         </li>
 
                         <li>
-                            <a class="dropdown-item" href="/SIBDAS/Ficha_10/isep_ginasio/public/login.php">
+                            <a class="dropdown-item" href="/SIBDAS/Ficha_10/isep_ginasio/public/logout.php">
                                 <i class="fa-solid fa-right-from-bracket me-2"></i> Sair
                             </a>
                         </li>

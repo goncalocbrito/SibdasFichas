@@ -1,6 +1,8 @@
 <?php
 // Inicia a sessão para poder usar a variável $_SESSION
-session_start();
+require_once 'includes/funcoes.php';
+
+start_session();
 
 // --------------------------------------------------------------------
 // SEGURANÇA: Impede que o utilizador aceda diretamente a este script.

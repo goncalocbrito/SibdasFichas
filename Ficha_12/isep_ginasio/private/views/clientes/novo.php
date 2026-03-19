@@ -23,12 +23,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sistema = $_POST["campo_opcao"] ?? "";
     $profissao = $_POST["profissao_cliente"] ?? "";
 
+    /*
     // 2. Imprimir os dados (teste)
     echo "<p><strong>Dados recebidos:</strong> Nome: $nome 
     | Morada: $morada | Código Postal: $cp | Cidade: $cidade 
     | Telefone: $telefone | Email: $email | Sexo: " . ($sexo == 'm' ? 'Masculino' : 'Feminino') . " 
     | Data de nascimento: $dnasc | Estado civil: $estado | Sistema de Saúde: $sistema 
     | Profissão: $profissao</p>";
+    */
 
     // 3. Validar os dados
     $erros = [];
@@ -122,10 +124,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $erros[] = "Profissão é obrigatória.";
     }
 
+    $dnasc = $_POST["dnasc_cliente"] ?? "";
+    $dnasc = trim($dnasc);
+    
+    if (empty($dnasc)) {
+        $erros[] = "O campo Data de Nascimento é obrigatório.";
+    }
+
+    // Validação de formato: AAAA-MM-DD
+    elseif (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $dnasc)) {
+        $erros[] = "Formato de data inválido. Use AAAA-MM-DD.";
+    }
+
+    // Verificar se é uma data real (ex: não aceitar 2024-02-31)
+    else {
+        $partes = explode('-', $dnasc);
+        if (!checkdate((int)$partes[1], (int)$partes[2], (int)$partes[0])) {
+            $erros[] = "Data de nascimento inválida.";
+        }
+    }
+
+    /*
     // 4. Depuração: mostrar os erros recolhidos
     echo "<pre>"; // torna mais legível no browser
     print_r($erros);
     echo "</pre>";
+    */
 
     // Normalizar entrada
     $nome = ucwords(strtolower($nome)); // Pedro Santos
@@ -134,6 +158,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sistema = strtoupper($sistema); // ADSE
     $profissao = ucwords(strtolower($profissao)); // Professor
 
+    /*
     echo "<p><strong>Dados normalizados:</strong></p>";
     echo "<ul>";
     echo "<li>Nome: $nome</li>";
@@ -142,6 +167,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "<li>Sistema de Saúde: $sistema</li>";
     echo "<li>Profissão: $profissao</li>";
     echo "</ul>";
+    */
 }
 
 include '../../includes/header.php';
@@ -252,12 +278,8 @@ include '../../includes/nav.php';
                                                 Data de nascimento
                                             </label>
 
-                                            <input type="text"
-                                                    class="form-control"
-                                                    id="texto_dnasc"
-                                                    name="dnasc_cliente"
-                                                    value="<?= htmlspecialchars($_POST['dnasc_cliente'] ?? '') ?>"
-                                                    required>
+                                            <input type="text" class="form-control" id="data_nasc" name="dnasc_cliente"
+                                                value="<?= htmlspecialchars($_POST['dnasc_cliente'] ?? '') ?>" required>
                                         </div>
 
                                     </div>
@@ -324,9 +346,19 @@ include '../../includes/nav.php';
                                     </div>
 
                                     <!-- Área de erros -->
-                                    <div class="alert alert-danger text-center" role="alert">
-                                        • Erro
-                                    </div>
+                                    <?php if (!empty($erros)): ?>
+                                        <div class="alert alert-danger" role="alert">
+
+                                            <strong>Foram encontrados os seguintes erros:</strong>
+
+                                            <ul class="mb-0">
+                                                <?php foreach ($erros as $erro): ?>
+                                                    <li><?= htmlspecialchars($erro) ?></li>
+                                                <?php endforeach; ?>
+                                            </ul>
+
+                                        </div>
+                                    <?php endif; ?>
 
                                 </form>
 
@@ -342,4 +374,10 @@ include '../../includes/nav.php';
         </div>
 
 <?php include '../../includes/footer.php'; ?>
+
+<script>
+flatpickr("#data_nasc", {
+    dateFormat: "Y-m-d"
+});
+</script>
 

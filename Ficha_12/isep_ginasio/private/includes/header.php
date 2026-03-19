@@ -32,6 +32,12 @@ require_once __DIR__ . '/../../config/config.php';
     <!-- DataTables CSS + JS -->
     <link rel="stylesheet" href="/SIBDAS/Ficha_12/isep_ginasio/private/assets/datatables/datatables.min.css">
     <script src="/SIBDAS/Ficha_12/isep_ginasio/private/assets/datatables/datatables.min.js"></script>
+
+    <!-- CSS do Flatpickr -->
+    <link rel="stylesheet" href="/SIBDAS/Ficha_12/isep_ginasio/private/assets/flatpickr/flatpickr.min.css">
+    
+    <!-- JS do Flatpickr -->
+    <script src="/SIBDAS/Ficha_12/isep_ginasio/private/assets/flatpickr/flatpickr.js"></script>
 </head>
 
 <body>

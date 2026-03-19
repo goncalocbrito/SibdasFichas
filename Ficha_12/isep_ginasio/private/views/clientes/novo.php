@@ -126,6 +126,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "<pre>"; // torna mais legível no browser
     print_r($erros);
     echo "</pre>";
+
+    // Normalizar entrada
+    $nome = ucwords(strtolower($nome)); // Pedro Santos
+    $cidade = ucfirst(strtolower($cidade)); // Porto
+    $email = strtolower($email); // guimas@email.pt
+    $sistema = strtoupper($sistema); // ADSE
+    $profissao = ucwords(strtolower($profissao)); // Professor
+
+    echo "<p><strong>Dados normalizados:</strong></p>";
+    echo "<ul>";
+    echo "<li>Nome: $nome</li>";
+    echo "<li>Cidade: $cidade</li>";
+    echo "<li>Email: $email</li>";
+    echo "<li>Sistema de Saúde: $sistema</li>";
+    echo "<li>Profissão: $profissao</li>";
+    echo "</ul>";
 }
 
 include '../../includes/header.php';

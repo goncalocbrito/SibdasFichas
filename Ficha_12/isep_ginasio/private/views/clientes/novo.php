@@ -34,6 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // 3. Validar os dados
     $erros = [];
+    $erro_sistema = ""; // Para erros de SQL (PDO)
 
     // Remover espaços extra
     $nome = trim($nome);
@@ -168,6 +169,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "<li>Profissão: $profissao</li>";
     echo "</ul>";
     */
+
+    if (empty($erros)) {
+
+        try {
+
+            $ligacao = new PDO(
+                "mysql:host=" . MYSQL_HOST . ";dbname=" . MYSQL_DATABASE . ";charset=utf8",
+                MYSQL_USERNAME,
+                MYSQL_PASSWORD
+            );
+
+            $ligacao->exec("
+                INSERT INTO clientes (
+                    nome,               
+                    sexo,
+                    data_nascimento,
+                    email,
+                    telefone,
+                    morada,
+                    cidade,
+                    cliente_ativo,
+                    sistema_saude
+                ) VALUES (
+                    '$nome',
+                    '$sexo',
+                    '$dnasc',
+                    '$email',
+                    '$telefone',
+                    '$morada',
+                    '$cidade',
+                    '1',
+                    '$sistema'
+                )
+            ");
+
+            header('Location: lista.php');
+            exit;
+
+        } catch (PDOException $err) {
+
+            //$erros = "Erro ao gravar os dados: " . $err->getMessage();
+            $erro_sistema = "Erro ao gravar os dados: " . $err->getMessage();
+        }
+
+        $ligacao = null;
+    }
 }
 
 include '../../includes/header.php';
@@ -357,6 +404,13 @@ include '../../includes/nav.php';
                                                 <?php endforeach; ?>
                                             </ul>
 
+                                        </div>
+                                    <?php endif; ?>
+                                    
+                                    <?php if (!empty($erro_sistema)): ?>
+                                        <div class="alert alert-danger">
+                                            <strong>Erro:</strong>
+                                            <p><?= htmlspecialchars($erro_sistema) ?></p>
                                         </div>
                                     <?php endif; ?>
 

@@ -170,10 +170,8 @@ include '../../includes/nav.php';
                                             <label for="texto_endereco" class="form-label">
                                                 Morada <small>(Nº Porta, Andar)</small>
                                             </label>
-                                            <input type="text"
-                                                class="form-control"
-                                                id="texto_endereco"
-                                                name="morada_cliente">
+                                            <input type="text" class="form-control" id="texto_endereco" name="morada_cliente"
+                                                value="<?= htmlspecialchars($_POST['morada_cliente'] ?? '') ?>">
                                         </div>
                                     </div>
 
@@ -181,38 +179,26 @@ include '../../includes/nav.php';
 
                                         <div class="col-md-3">
                                             <label for="texto_cp" class="form-label">Código Postal</label>
-                                            <input type="text"
-                                                class="form-control"
-                                                id="texto_cp"
-                                                name="cp_cliente"
-                                                required>
+                                            <input type="text" name="cp_cliente" class="form-control"
+                                                value="<?= htmlspecialchars($_POST['cp_cliente'] ?? '') ?>">
                                         </div>
 
                                         <div class="col-md-3">
                                             <label for="texto_cidade" class="form-label">Cidade</label>
-                                            <input type="text"
-                                                class="form-control"
-                                                id="texto_cidade"
-                                                name="cid_cliente"
-                                                required>
+                                            <input type="text" class="form-control" id="texto_cidade" name="cid_cliente"
+                                                value="<?= htmlspecialchars($_POST['cid_cliente'] ?? '') ?>" required>
                                         </div>
 
                                         <div class="col-md-3">
                                             <label for="texto_cliente" class="form-label">Telefone</label>
-                                            <input type="text"
-                                                class="form-control"
-                                                id="texto_cliente"
-                                                name="tel_cliente"
-                                                required>
+                                            <input type="text" class="form-control" id="texto_cliente" name="tel_cliente"
+                                                value="<?= htmlspecialchars($_POST['tel_cliente'] ?? '') ?>" required>
                                         </div>
 
                                         <div class="col-md-3">
                                             <label for="texto_email" class="form-label">Email</label>
-                                            <input type="email"
-                                                class="form-control"
-                                                id="texto_email"
-                                                name="email_cliente"
-                                                required>
+                                            <input type="email" name="email_cliente" class="form-control"
+                                                value="<?= $_POST['email_cliente'] ?? '' ?>">
                                         </div>
 
                                     </div>
@@ -225,12 +211,8 @@ include '../../includes/nav.php';
                                             <div>
 
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input"
-                                                        type="radio"
-                                                        name="radio_gender"
-                                                        id="radio_m"
-                                                        value="m"
-                                                        checked>
+                                                    <input type="radio" name="radio_gender" value="m"
+                                                        <?= (($_POST['radio_gender'] ?? '') === 'm') ? 'checked' : '' ?>>
 
                                                     <label class="form-check-label" for="radio_m">
                                                         Masculino
@@ -238,11 +220,8 @@ include '../../includes/nav.php';
                                                 </div>
 
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input"
-                                                        type="radio"
-                                                        name="radio_gender"
-                                                        id="radio_f"
-                                                        value="f">
+                                                    <input type="radio" name="radio_gender" value="f"
+                                                        <?= (($_POST['radio_gender'] ?? '') === 'f') ? 'checked' : '' ?>>
 
                                                     <label class="form-check-label" for="radio_f">
                                                         Feminino
@@ -258,10 +237,11 @@ include '../../includes/nav.php';
                                             </label>
 
                                             <input type="text"
-                                                class="form-control"
-                                                id="texto_dnasc"
-                                                name="dnasc_cliente"
-                                                required>
+                                                    class="form-control"
+                                                    id="texto_dnasc"
+                                                    name="dnasc_cliente"
+                                                    value="<?= htmlspecialchars($_POST['dnasc_cliente'] ?? '') ?>"
+                                                    required>
                                         </div>
 
                                     </div>
@@ -278,9 +258,9 @@ include '../../includes/nav.php';
                                                     name="estaciv_cliente">
 
                                                 <option selected>Escolha uma opção</option>
-                                                <option value="solt">Solteiro</option>
-                                                <option value="casd">Casado</option>
-                                                <option value="ufat">União de Facto</option>
+                                                <option value="solt" <?= (($_POST['estaciv_cliente'] ?? '') == 'solt') ? 'selected' : '' ?>>Solteiro</option>
+                                                <option value="casd" <?= (($_POST['estaciv_cliente'] ?? '') == 'casd') ? 'selected' : '' ?>>Casado</option>
+                                                <option value="ufat" <?= (($_POST['estaciv_cliente'] ?? '') == 'ufat') ? 'selected' : '' ?>>União de Facto</option>
 
                                             </select>
                                         </div>
@@ -290,11 +270,8 @@ include '../../includes/nav.php';
                                                 Sistema de Saúde
                                             </label>
 
-                                            <input type="text"
-                                                class="form-control"
-                                                id="texto_SSaude"
-                                                name="campo_opcao"
-                                                list="sistemasaude">
+                                            <input type="text" class="form-control" id="texto_SSaude" name="campo_opcao"
+                                                list="sistemasaude" value="<?= htmlspecialchars($_POST['campo_opcao'] ?? '') ?>">
 
                                             <datalist id="sistemasaude">
                                                 <option value="SNS">
@@ -311,10 +288,8 @@ include '../../includes/nav.php';
                                                 Profissão
                                             </label>
 
-                                            <input type="text"
-                                                class="form-control"
-                                                id="profissao"
-                                                name="profissao_cliente">
+                                            <input type="text" class="form-control" id="profissao" name="profissao_cliente"
+                                                value="<?= htmlspecialchars($_POST['profissao_cliente'] ?? '') ?>">
                                         </div>
 
                                     </div>

@@ -180,29 +180,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 MYSQL_PASSWORD
             );
 
-            $ligacao->exec("
-                INSERT INTO clientes (
-                    nome,               
-                    sexo,
-                    data_nascimento,
-                    email,
-                    telefone,
-                    morada,
-                    cidade,
-                    cliente_ativo,
-                    sistema_saude
-                ) VALUES (
-                    '$nome',
-                    '$sexo',
-                    '$dnasc',
-                    '$email',
-                    '$telefone',
-                    '$morada',
-                    '$cidade',
-                    '1',
-                    '$sistema'
-                )
-            ");
+            $sql = "INSERT INTO clientes (
+            nome, sexo, data_nascimento, email, telefone, morada, cidade, cliente_ativo, sistema_saude
+            ) VALUES ( :nome, :sexo, :dnasc, :email, :telefone, :morada, :cidade, '1', :sistema)";
+
+            $stmt = $ligacao->prepare($sql);
+
+            $stmt->execute([
+                ':nome' => $nome,
+                ':sexo' => $sexo,
+                ':dnasc' => $dnasc,
+                ':email' => $email,
+                ':telefone' => $telefone,
+                ':morada' => $morada,
+                ':cidade' => $cidade,
+                ':sistema' => $sistema
+            ]);
 
             header('Location: lista.php');
             exit;

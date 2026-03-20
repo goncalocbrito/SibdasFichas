@@ -28,8 +28,37 @@ if (!$idClient) {
     exit;
 }
 
+try {
+    $ligacao = new PDO(
+        "mysql:host=" . MYSQL_HOST . ";dbname=" . MYSQL_DATABASE . ";charset=utf8",
+        MYSQL_USERNAME,
+        MYSQL_PASSWORD
+    );
+    
+    $ligacao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    // Preparar e executar a query com segurança
+    $stmt = $ligacao->prepare("SELECT * FROM clientes WHERE id = :id");
+    $stmt->bindParam(':id', $idClient, PDO::PARAM_INT);
+    $stmt->execute();
+    $cliente = $stmt->fetch(PDO::FETCH_OBJ);
+    
+    // Se não encontrou o cliente, redireciona
+    if (!$cliente) {
+        header('Location: ' . BASE_URL . '/private/views/clientes/lista.php');
+        exit;
+    }
+
+    //$erro = ''; apagar senao o erro nao e exibido
+} catch (PDOException $err) {
+    $erro = "Erro na ligação à base de dados.";
+    $cliente = null;
+}
+// Fecha a ligação
+$ligacao = null;
+
 // Para testar (temporário)
-echo ($idClient);
+//echo ($idClient);
 
 include '../../includes/header.php';
 include '../../includes/nav.php';
@@ -68,7 +97,7 @@ include '../../includes/nav.php';
                                                 class="form-control"
                                                 id="texto_nome"
                                                 name="nome_cliente"
-                                                value="João Miguel Ferreira"
+                                                value="<?= htmlspecialchars($cliente->nome) ?>"
                                                 required>
                                         </div>
                                     </div>
@@ -82,7 +111,7 @@ include '../../includes/nav.php';
                                                 class="form-control"
                                                 id="texto_endereco"
                                                 name="morada_cliente"
-                                                value="Rua das Flores, Nº 25, 2º Esq">
+                                                value="<?= htmlspecialchars($cliente->morada) ?>">
                                         </div>
                                     </div>
 
@@ -104,7 +133,7 @@ include '../../includes/nav.php';
                                                 class="form-control"
                                                 id="texto_cidade"
                                                 name="cid_cliente"
-                                                value="Porto"
+                                                value="<?= htmlspecialchars($cliente->cidade) ?>"
                                                 required>
                                         </div>
 
@@ -114,7 +143,7 @@ include '../../includes/nav.php';
                                                 class="form-control"
                                                 id="texto_cliente"
                                                 name="tel_cliente"
-                                                value="912345678"
+                                                value="<?= htmlspecialchars($cliente->telefone) ?>"
                                                 required>
                                         </div>
 
@@ -124,7 +153,7 @@ include '../../includes/nav.php';
                                                 class="form-control"
                                                 id="texto_email"
                                                 name="email_cliente"
-                                                value="joao.ferreira@email.com"
+                                                value="<?= htmlspecialchars($cliente->email) ?>"
                                                 required>
                                         </div>
 
@@ -141,7 +170,7 @@ include '../../includes/nav.php';
                                                         type="radio"
                                                         name="radio_gender"
                                                         id="radio_m"
-                                                        value="m"
+                                                        value="m" <?= $cliente->sexo == 'm' ? 'checked' : '' ?>
                                                         checked>
                                                     <label class="form-check-label" for="radio_m">
                                                         Masculino
@@ -153,7 +182,7 @@ include '../../includes/nav.php';
                                                         type="radio"
                                                         name="radio_gender"
                                                         id="radio_f"
-                                                        value="f">
+                                                        value="f" <?= $cliente->sexo == 'f' ? 'checked' : '' ?>>
                                                     <label class="form-check-label" for="radio_f">
                                                         Feminino
                                                     </label>
@@ -169,7 +198,7 @@ include '../../includes/nav.php';
                                                 class="form-control"
                                                 id="texto_dnasc"
                                                 name="dnasc_cliente"
-                                                value="15/08/1998"
+                                                value="<?= date('Y-m-d', strtotime($cliente->data_nascimento)) ?>"
                                                 required>
                                         </div>
 

@@ -12,6 +12,14 @@ if (!in_array($_SERVER['REQUEST_METHOD'], ['GET', 'POST'])) {
     exit;
 }
 
+$idClientEncrypted = $_GET['id_cliente'] ?? null;
+$idClient = aes_decrypt($idClientEncrypted);
+
+if (!$idClient || !is_numeric($idClient)) {
+    header('Location: ' . BASE_URL . '/private/views/clientes/lista.php');
+    exit;
+}
+
 // Recolhe o ID do cliente da URL
 $idClient = $_GET['id_cliente'] ?? null;
 

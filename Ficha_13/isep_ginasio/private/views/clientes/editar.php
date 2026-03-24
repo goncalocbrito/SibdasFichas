@@ -20,6 +20,7 @@ if (!$idClient || !is_numeric($idClient)) {
     exit;
 }
 
+/*
 // Recolhe o ID do cliente da URL
 $idClient = $_GET['id_cliente'] ?? null;
 
@@ -27,6 +28,7 @@ if (!$idClient) {
     header('Location: ' . BASE_URL . '/private/views/clientes/lista.php');
     exit;
 }
+*/
 
 try {
     $ligacao = new PDO(

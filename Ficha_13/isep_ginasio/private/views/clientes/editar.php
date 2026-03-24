@@ -6,6 +6,7 @@
 // --------------------------------------------------------------------
 require_once __DIR__ . '/../../includes/funcoes.php';
 redirect_if_not_logged(); // Inicia a sessão (se necessário) e verifica se o utilizador está autenticado 
+require_once __DIR__ . '/../../includes/validacoes.php';
 
 if (!in_array($_SERVER['REQUEST_METHOD'], ['GET', 'POST'])) {
     header('Location: ' . BASE_URL . '/public/login.php');
@@ -27,9 +28,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $novaMorada = $_POST['morada_cliente'] ?? '';
     $novoTelefone = $_POST['tel_cliente'] ?? '';
 
-    if (empty(trim($novoNome))) {
-        $erro = "O nome não pode estar vazio.";
-    } else {
+    $erros = validar_nome($novoNome);
+
+    if (empty($erros)) {
         try {
             $ligacao = new PDO(
                 "mysql:host=" . MYSQL_HOST . ";dbname=" . MYSQL_DATABASE . ";charset=utf8",
@@ -39,7 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $ligacao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            #$stmt = $ligacao->prepare("UPDATE clientes SET nome = :nome WHERE id = :id");
             $stmt = $ligacao->prepare("
                 UPDATE clientes
                 SET nome = :nome,
@@ -49,7 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 WHERE id = :id
             ");
 
-            
             $stmt->bindParam(':nome', $novoNome, PDO::PARAM_STR);
             $stmt->bindParam(':email', $novoEmail, PDO::PARAM_STR);
             $stmt->bindParam(':morada', $novaMorada, PDO::PARAM_STR);
@@ -57,12 +56,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bindParam(':id', $idClient, PDO::PARAM_INT);
             $stmt->execute();
 
-            // Mensagem de sucesso e redirecionamento (opcional)
             header('Location: lista.php');
             exit;
 
         } catch (PDOException $err) {
-            $erro = "Erro ao atualizar o nome: " . $err->getMessage();
+            $erros[] = "Erro ao atualizar o nome: " . $err->getMessage();
         }
     }
 }
@@ -319,9 +317,11 @@ include '../../includes/nav.php';
                                     </div>
 
                                     <!-- Área de erros -->
-                                    <?php if (!empty($erro)): ?>
+                                    <?php if (!empty($erros)): ?>
                                         <div class="alert alert-danger text-center" role="alert">
-                                            <?= htmlspecialchars($erro) ?>
+                                            <?php foreach ($erros as $erro): ?>
+                                                <div><?= htmlspecialchars($erro) ?></div>
+                                            <?php endforeach; ?>
                                         </div>
                                     <?php endif; ?>
 

@@ -52,11 +52,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // --------------------
     // Validação do Nome
     // --------------------
+    /*
     if (empty($nome)) {
         $erros[] = "O campo Nome é obrigatório.";
     } elseif (preg_match('/\d/', $nome)) {
         $erros[] = "O campo Nome não pode conter números.";
     }
+    */
 
     // --------------------
     // Validação da Morada

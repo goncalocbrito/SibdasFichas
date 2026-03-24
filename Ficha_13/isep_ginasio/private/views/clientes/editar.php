@@ -12,12 +12,59 @@ if (!in_array($_SERVER['REQUEST_METHOD'], ['GET', 'POST'])) {
     exit;
 }
 
+//Desencriptar e validar o ID do Cliente
 $idClientEncrypted = $_GET['id_cliente'] ?? null;
 $idClient = aes_decrypt($idClientEncrypted);
 
 if (!$idClient || !is_numeric($idClient)) {
     header('Location: ' . BASE_URL . '/private/views/clientes/lista.php');
     exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $novoNome = $_POST['nome_cliente'] ?? '';
+    $novoEmail = $_POST['email_cliente'] ?? '';
+    $novaMorada = $_POST['morada_cliente'] ?? '';
+    $novoTelefone = $_POST['tel_cliente'] ?? '';
+
+    if (empty(trim($novoNome))) {
+        $erro = "O nome não pode estar vazio.";
+    } else {
+        try {
+            $ligacao = new PDO(
+                "mysql:host=" . MYSQL_HOST . ";dbname=" . MYSQL_DATABASE . ";charset=utf8",
+                MYSQL_USERNAME,
+                MYSQL_PASSWORD
+            );
+
+            $ligacao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            #$stmt = $ligacao->prepare("UPDATE clientes SET nome = :nome WHERE id = :id");
+            $stmt = $ligacao->prepare("
+                UPDATE clientes
+                SET nome = :nome,
+                    email = :email,
+                    morada = :morada,
+                    telefone = :telefone
+                WHERE id = :id
+            ");
+
+            
+            $stmt->bindParam(':nome', $novoNome, PDO::PARAM_STR);
+            $stmt->bindParam(':email', $novoEmail, PDO::PARAM_STR);
+            $stmt->bindParam(':morada', $novaMorada, PDO::PARAM_STR);
+            $stmt->bindParam(':telefone', $novoTelefone, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $idClient, PDO::PARAM_INT);
+            $stmt->execute();
+
+            // Mensagem de sucesso e redirecionamento (opcional)
+            header('Location: lista.php');
+            exit;
+
+        } catch (PDOException $err) {
+            $erro = "Erro ao atualizar o nome: " . $err->getMessage();
+        }
+    }
 }
 
 /*
@@ -88,7 +135,7 @@ include '../../includes/nav.php';
 
                                 <hr>
 
-                                <form action="#" method="post" novalidate>
+                                <form action="editar.php?id_cliente=<?= $idClientEncrypted ?>" method="post" novalidate>
 
                                     <!-- Linhas e colunas com campos organizados -->
 
@@ -272,9 +319,11 @@ include '../../includes/nav.php';
                                     </div>
 
                                     <!-- Área de erros -->
-                                    <div class="alert alert-danger text-center" role="alert">
-                                        • Erro
-                                    </div>
+                                    <?php if (!empty($erro)): ?>
+                                        <div class="alert alert-danger text-center" role="alert">
+                                            <?= htmlspecialchars($erro) ?>
+                                        </div>
+                                    <?php endif; ?>
 
                                 </form>
 

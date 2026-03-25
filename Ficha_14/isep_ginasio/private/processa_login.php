@@ -108,29 +108,27 @@ try {
         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
     );
 
-    $parametros = [
-        ':u' => $_POST['text_username'],
-        ':p' => $_POST['text_password']
-    ];
+    $comando = $ligacao->prepare(" SELECT *, AES_DECRYPT(name, :chave) AS email FROM agents WHERE AES_DECRYPT(name, :chave) = :u");
+    $comando->execute([
+        ':chave' => MYSQL_AES_KEY,
+        ':u' => $_POST['text_username']
+    ]);
 
-    $comando = $ligacao->prepare("SELECT * FROM agents WHERE name = :u AND passwrd = :p");
-    $comando->execute($parametros);
-    $resultados = $comando->fetchAll(PDO::FETCH_OBJ);
+    $agente = $comando->fetch(PDO::FETCH_OBJ);
     
-    if (count($resultados) === 0) {
+    // 2. Verifica se o utilizador existe e se a password está correta
+    if (!$agente || $_POST['text_password'] !== $agente->passwrd) {
         $_SESSION['server_error'] = 'Login inválido';
         header('Location: ../public/login.php');
         return;
     }
 
-    $agente = $resultados[0];
-    
     // Atualizar last_login
     $stmt = $ligacao->prepare("UPDATE agents SET last_login = NOW() WHERE id = ?");
     $stmt->execute([$agente->id]);
     
     // Guardar na sessão
-    $_SESSION['utilizador'] = $agente->name;
+    $_SESSION['utilizador'] = $agente->email;
     $_SESSION['profile'] = $agente->profile;
 } catch (PDOException $e) {
     $_SESSION['server_error'] = 'Erro ao ligar à base de dados.';

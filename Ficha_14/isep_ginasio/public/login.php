@@ -38,14 +38,14 @@ $server_error = [];
 
                     <div class="d-flex align-items-center justify-content-center my-4">
                         <!-- Imagem do ginásio + texto -->
-                        <img src="/SIBDAS/Ficha_10/isep_ginasio/private/assets/img/gym125.png" class="img-fluid me-3">
+                        <img src="/SIBDAS/Ficha_14/isep_ginasio/private/assets/img/gym125.png" class="img-fluid me-3">
                         <h2><strong> <?php echo APP_NAME; ?></strong></h2>
                     </div>
                     
                     <div class="row">
                         <div class="col">
                             <!-- Formulário -->
-                             <form action="../private/processa_login.php" method="post">
+                             <form name="formulario" action="../private/processa_login.php" method="post">
 
                                 <div class="mb-3">
                                     <!-- Utilizador -->
@@ -63,6 +63,17 @@ $server_error = [];
                                     <!-- Submit -->
                                     <button type="submit" class="btn btn-secondary px-4">
                                         Entrar <i class="fa-solid fa-right-to-bracket ms-2"></i>
+                                    </button>
+                                </div>
+
+                                <!-- Botões de preenchimento automático (Fase de Testes) -->
+                                <div class="mt-2 text-center">
+                                    <button type="button" id="preencher_adm" class="btn btn-outline-primary btn-sm me-2">
+                                        Preencher Admin
+                                    </button>
+
+                                    <button type="button" id="preencher_agnt" class="btn btn-outline-secondary btn-sm">
+                                        Preencher Agente
                                     </button>
                                 </div>
 
@@ -110,5 +121,20 @@ $server_error = [];
             </div>
         </div>
     </div>
+
+    <script>
+        // Preenchimento automático para testes
+        document.querySelector("#preencher_adm").addEventListener('click', () => {
+            const formulario = document.forms['formulario'];
+            formulario['text_username'].value = "admin@isep.pt";
+            formulario['text_password'].value = "$2y$10$aia";
+        });
+
+        document.querySelector("#preencher_agnt").addEventListener('click', () => {
+            const formulario = document.forms['formulario'];
+            formulario['text_username'].value = "agente1@isep.pt";
+            formulario['text_password'].value = "$2y$10$O";
+        });
+    </script>
     
 <?php include '../private/includes/footer.php'; ?>

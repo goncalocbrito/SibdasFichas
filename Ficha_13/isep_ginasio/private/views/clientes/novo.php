@@ -36,7 +36,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // 3. Validar os dados
     $erros = [];
     $erro_sistema = ""; // Para erros de SQL (PDO)
-    $erros = validar_nome($nome);
+    // $erros = validar_nome($nome);
+    $erros = array_merge($erros, validar_nome($nome));
+    $erros = array_merge($erros, validar_morada($morada));
+    $erros = array_merge($erros, validar_codigo_postal($cp));
+    $erros = array_merge($erros, validar_cidade($cidade));
+    $erros = array_merge($erros, validar_telefone($telefone));
+    $erros = array_merge($erros, validar_email($email));
+    $erros = array_merge($erros, validar_sexo($sexo));
+    $erros = array_merge($erros, validar_data_nascimento($dnasc));
+    $erros = array_merge($erros, validar_estado_civil($estado));
+    $erros = array_merge($erros, validar_sistema_saude($sistema));
+    $erros = array_merge($erros, validar_profissao($profissao));
 
     // Remover espaços extra
     $nome = trim($nome);
@@ -58,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (preg_match('/\d/', $nome)) {
         $erros[] = "O campo Nome não pode conter números.";
     }
-    */
+    
 
     // --------------------
     // Validação da Morada
@@ -149,6 +160,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+    */
     /*
     // 4. Depuração: mostrar os erros recolhidos
     echo "<pre>"; // torna mais legível no browser

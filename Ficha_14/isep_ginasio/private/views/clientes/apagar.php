@@ -6,10 +6,40 @@
 // --------------------------------------------------------------------
 require_once __DIR__ . '/../../includes/funcoes.php';
 redirect_if_not_logged(); // Inicia a sessão (se necessário) e verifica se o utilizador está autenticado
-?>
 
-<?php include '../../includes/header.php'; ?>
-<?php include '../../includes/nav.php'; ?>
+//Desencriptar e validar o ID do Cliente
+$idClientEncrypted = $_GET['id_cliente'] ?? null;
+$idClient = aes_decrypt($idClientEncrypted);
+
+if (!$idClient || !is_numeric($idClient)) {
+    header('Location: ' . BASE_URL . '/private/views/clientes/lista.php');
+    exit;
+}
+
+try {
+    $ligacao = new PDO(
+        "mysql:host=" . MYSQL_HOST . ";dbname=" . MYSQL_DATABASE . ";charset=utf8",
+        MYSQL_USERNAME,
+        MYSQL_PASSWORD
+    );
+
+    $stmt = $ligacao->prepare("SELECT nome, email, telefone FROM clientes WHERE id = :id");
+    $stmt->bindParam(':id', $idClient, PDO::PARAM_INT);
+    $stmt->execute();
+    $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if (!$cliente) {
+        echo "<p class='text-danger'>Cliente não encontrado.</p>";
+        exit;
+    }
+} catch (PDOException $e) {
+    echo "<p class='text-danger'>Erro: " . $e->getMessage() . "</p>";
+    exit;
+}
+
+include '../../includes/header.php';
+include '../../includes/nav.php'; 
+?>
 
         <div class="container-fluid">
             <div class="row">
@@ -29,18 +59,18 @@ redirect_if_not_logged(); // Inicia a sessão (se necessário) e verifica se o u
                             <p class="mb-2 fs-5">Deseja eliminar o cliente?</p>
 
                             <h4 class="mb-4">
-                                <strong>João Santos</strong>
+                                <strong><?= htmlspecialchars($cliente['nome']) ?></strong>
                             </h4>
 
                             <div class="mb-4">
                                 <span class="d-block mb-1">
                                     <i class="fa-solid fa-at me-2"></i>
-                                    <strong>jsantos@gmails.com</strong>
+                                    <strong><?= htmlspecialchars($cliente['email']) ?></strong>
                                 </span>
 
                                 <span class="d-block">
                                     <i class="fa-solid fa-phone me-2"></i>
-                                    <strong>93123456</strong>
+                                    <strong><?= htmlspecialchars($cliente['telefone']) ?></strong>
                                 </span>
                             </div>
 
@@ -50,7 +80,7 @@ redirect_if_not_logged(); // Inicia a sessão (se necessário) e verifica se o u
                                     <i class="fa-solid fa-xmark me-2"></i> Não
                                 </a>
 
-                                <a href="#" class="btn btn-danger px-4">
+                                <a href="confirmar_apagar.php?id_cliente=<?= urlencode($idClientEncrypted) ?>" class="btn btn-danger px-4">
                                     <i class="fa-solid fa-check me-2"></i> Sim
                                 </a>
 
